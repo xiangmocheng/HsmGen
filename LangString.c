@@ -49,6 +49,19 @@ L"8.5 x 14\"\0"	//SID_85x14
 L"8.5 x 13\"\0"	//SID_85x13
 L"8.5 x 11\"\0"	//SID_85x11
 L"Custom Size(XXXxXXXmm     )\0"	//SID_CustomSizeXXXxXXXmm
+L"Text\0"	//SID_Text
+L"Photo & Text\0"	//SID_PhotoText
+L"Photo\0"	//SID_Photo
+L"1->1 Sided\0"	//SID_11Sided
+L"1->2 Sided\0"	//SID_12Sided
+L"2->1 Sided\0"	//SID_21Sided
+L"Off\0"	//SID_Off
+L"On\0"	//SID_On
+L"On(Rotate)\0"	//SID_OnRotate
+L"2 Pages\0"	//SID_2Pages
+L"4 Pages\0"	//SID_4Pages
+L"Toner Saver\0"	//SID_TonerSaver
+L"2->2 Sided\0"	//SID_22Sided
 };
 
 tUint32 strTableSize = sizeof(wstringTableEng);

@@ -46,7 +46,7 @@ def readexcel(path,CFile,HFile):
 
     #选取sheet的范围
     startSheet = 3
-    endSheet = 4
+    endSheet = 5
         
     for s in range(startSheet,endSheet):   #遍历sheet
         sheet1 = workbook.sheets()[s]  #进入第n张表
@@ -72,7 +72,8 @@ def readexcel(path,CFile,HFile):
                 #print(color)
                 #动态或者不确定的字符串背景定义为红色，不会取值
                 #如果已有，则退出for循环，不增加重复数据
-                if color == (255, 0, 0) or old_List[i] in lineList or old_List[i] == '':
+                if color == (255, 0, 0) or old_List[i] in lineList\
+                    or old_List[i] == '' or old_List[i] == ' ->':
                     continue
                 else:
                     print(old_List[i])

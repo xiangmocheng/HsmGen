@@ -1,7 +1,16 @@
 #include "hsm.h"
 #include "menu.h"
+#include "mid.h"
 #include "LangString.h"
 
+eMenuID Copy_OutputBindingPositionList[2] = {
+    MID_Copy_OutputBindingPosition_FliponLongEdge,
+    MID_Copy_OutputBindingPosition_FilponShortEdge
+};
+stMenuStruct MS_Copy_OutputBindingPosition = { MID_Copy_OutputBindingPosition, SID_OutputBindingPosition, Copy_OutputBindingPositionList};
+
+stMenuEntryInfo MEntry_Copy_OutputBindingPosition_FliponLongEdge = { MID_Copy_OutputBindingPosition_FliponLongEdge, SID_FliponLongEdge, QUAL_TYPE, 0, 0, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_OutputBindingPosition_FilponShortEdge = { MID_Copy_OutputBindingPosition_FilponShortEdge, SID_FilponShortEdge, QUAL_TYPE, 0, 1, 0, 0, 0, 0, 0};
 
 STRING_ID Copy_OutputBindingPositionString[3] = {
     SID_OutputBindingPosition,

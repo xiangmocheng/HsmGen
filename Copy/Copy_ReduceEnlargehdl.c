@@ -1,7 +1,34 @@
 #include "hsm.h"
 #include "menu.h"
+#include "mid.h"
 #include "LangString.h"
 
+eMenuID Copy_ReduceEnlargeList[11] = {
+    MID_Copy_ReduceEnlarge_Auto,
+    MID_Copy_ReduceEnlarge_100,
+    MID_Copy_ReduceEnlarge_50A3A5,
+    MID_Copy_ReduceEnlarge_70A3A4B4B5,
+    MID_Copy_ReduceEnlarge_81B4A4B5A5,
+    MID_Copy_ReduceEnlarge_86A3B4A4B5,
+    MID_Copy_ReduceEnlarge_115B4A3B5A4,
+    MID_Copy_ReduceEnlarge_122A4B4A5B5,
+    MID_Copy_ReduceEnlarge_141A4A3B5B4,
+    MID_Copy_ReduceEnlarge_200A5A3,
+    MID_Copy_ReduceEnlarge_Preset400
+};
+stMenuStruct MS_Copy_ReduceEnlarge = { MID_Copy_ReduceEnlarge, SID_ReduceEnlarge, Copy_ReduceEnlargeList};
+
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_Auto = { MID_Copy_ReduceEnlarge_Auto, SID_Auto, QUAL_TYPE, 0, 0, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_100 = { MID_Copy_ReduceEnlarge_100, SID_100, QUAL_TYPE, 0, 1, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_50A3A5 = { MID_Copy_ReduceEnlarge_50A3A5, SID_50A3A5, QUAL_TYPE, 0, 2, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_70A3A4B4B5 = { MID_Copy_ReduceEnlarge_70A3A4B4B5, SID_70A3A4B4B5_2, QUAL_TYPE, 0, 3, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_81B4A4B5A5 = { MID_Copy_ReduceEnlarge_81B4A4B5A5, SID_81B4A4B5A5, QUAL_TYPE, 0, 4, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_86A3B4A4B5 = { MID_Copy_ReduceEnlarge_86A3B4A4B5, SID_86A3B4A4B5, QUAL_TYPE, 0, 5, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_115B4A3B5A4 = { MID_Copy_ReduceEnlarge_115B4A3B5A4, SID_115B4A3B5A4, QUAL_TYPE, 0, 6, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_122A4B4A5B5 = { MID_Copy_ReduceEnlarge_122A4B4A5B5, SID_122A4B4A5B5, QUAL_TYPE, 0, 7, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_141A4A3B5B4 = { MID_Copy_ReduceEnlarge_141A4A3B5B4, SID_141A4A3B5B4, QUAL_TYPE, 0, 8, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_200A5A3 = { MID_Copy_ReduceEnlarge_200A5A3, SID_200A5A3, QUAL_TYPE, 0, 9, 0, 0, 0, 0, 0};
+stMenuEntryInfo MEntry_Copy_ReduceEnlarge_Preset400 = { MID_Copy_ReduceEnlarge_Preset400, SID_Preset400, QUAL_TYPE, 0, 10, 0, 0, 0, 0, 0};
 
 STRING_ID Copy_ReduceEnlargeString[12] = {
     SID_ReduceEnlarge,

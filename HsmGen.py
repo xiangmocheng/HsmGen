@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @Author: Benjamin
 
@@ -30,14 +30,14 @@ class MenuColor(Enum):
     LightBlue = 40
     Blank = 64
 
-excel = '\\LTCXXXX_L2_A3_MFP_MenuTree_Ver0.1_Rev002_200318.xls'
+excel = 'LTCXXXX_L2_A3_MFP_MenuTree_Ver0.1_Rev002_200318.xls'
 #excel = '\\LTCXXXX_L1_A3_MFP_4LineLCD_MenuTree_Ver0.1_Rev003_.xls'
-languageH = '\\LangString.h'
-languageC = '\\LangString.c'
-menuH = '\\mid.h'
-convertTableList = ['CopyHotKey']
+languageH = 'LangString.h'
+languageC = 'LangString.c'
+menuH = 'mid.h'
+#convertTableList = ['Copy','CopyHotKey']
 #convertTableList = ['Phone Book']
-#convertTableList = ['Copy','System']
+convertTableList = ['CopyHotKey']
 #convertTableList = ['Copy','ID Card Copy']
 
 #punctuation = " '/.,%-/>\":"
@@ -69,7 +69,7 @@ def genMSFile(IDList, SID):
     if len(IDList) < 1:
         return None
     s1 = 'stMenuStruct MS_'+tID+' = { MID_'+tID+', '+ SID +', '+tID+'List};\n\n'
-    s2 = 'eMenuID '+tID+'List['+str(len(IDList))+'] = {\n'
+    s2 = 'eMenuID '+tID+'List['+str(len(IDList)-1)+'] = {\n'
     if len(IDList) == 1:
         s2 += '    MID_'+IDList[0]+',\n'
     else:
@@ -263,7 +263,10 @@ def findCurLevelItem(row, col, nrows):
                 AllMEntryContent += MEntryContent
 
     print(MIDList)
-    with open(path + '\\'+MIDList[0]+'hdl.c','w') as f:
+    hdlPath = path + '\\'+MIDList[0]+'hdl.c'
+    while os.path.exists(hdlPath):
+        hdlPath = hdlPath[:-2]+'_1.c'
+    with open(hdlPath,'w') as f:
         f.write('#include "hsm.h"\n#include "menu.h"\n#include "mid.h"\n#include "LangString.h"\n\n')
         MS = genMSFile(MIDList, titleSID)
         f.write(MS)
@@ -282,6 +285,7 @@ def findLeafLevelItem(row, col, nrows):
     list = []
     MIDList = []
     SIDList = []
+    AllMEntryContent = ''
 
     titleString = currentSheet.cell(row, col).value
     titleID = String2ID(titleString)
@@ -331,19 +335,30 @@ def findLeafLevelItem(row, col, nrows):
                     MEntryList.append('MEntry_'+subMID)
                     MenuIDList.append('MID_'+subMID)
                     menuEntryF.write(MEntryContent)
+                    AllMEntryContent += MEntryContent
 
-            HdlGen_Enum(path, MIDList, SIDList, parentID)
-            initF.write(initGen2(MIDList[0], parentID))
-            MS = genMSFile(MIDList, titleSID)
-            if MS != None:
-                menuSturctureF.write(MS)
-                MStructureList.append(MIDList[0])
-            return list
+            hdlPath = path + '\\'+MIDList[0]+'hdl.c'
+            while os.path.exists(hdlPath):
+                hdlPath = hdlPath[:-2]+'_1.c'
+            with open(hdlPath,'w') as f:
+                f.write('#include "hsm.h"\n#include "menu.h"\n#include "mid.h"\n#include "LangString.h"\n\n')
+                MS = genMSFile(MIDList, titleSID)
+                f.write(MS)
+                f.write(AllMEntryContent)
+                hdl = HdlGen_Enum(path, MIDList, SIDList, parentID)
+                f.write(hdl)
+                initF.write(initGen2(MIDList[0], parentID))
+
+                if MS != None:
+                    menuSturctureF.write(MS)
+                    MStructureList.append(MIDList[0])
+                return list
 
 def findQuantityLevelItem(row, col, nrows):
     list = []
     MIDList = []
     SIDList = []
+
 
     titleString = currentSheet.cell(row, col).value
     titleID = String2ID(titleString)
@@ -374,13 +389,21 @@ def findQuantityLevelItem(row, col, nrows):
             SIDList.append(findSID(unitCell.value))
             break
 
-    HdlGen_Value(path, MIDList, SIDList, parentID)
-    initF.write(initGen2(MIDList[0], parentID))
-    MS = genMSFile(MIDList, titleSID)
-    if MS != None:
-        menuSturctureF.write(MS)
-        MStructureList.append(MIDList[0])
-    return list
+    hdlPath = path + '\\'+MIDList[0]+'hdl.c'
+    while os.path.exists(hdlPath):
+        hdlPath = hdlPath[:-2]+'_1.c'
+    with open(hdlPath,'w') as f:
+        f.write('#include "hsm.h"\n#include "menu.h"\n#include "mid.h"\n#include "LangString.h"\n\n')
+        MS = genMSFile(MIDList, titleSID)
+        f.write(MS)
+
+        hdl = HdlGen_Value(path, MIDList, SIDList, parentID)
+        f.write(hdl)
+        initF.write(initGen2(MIDList[0], parentID))
+        if MS != None:
+            menuSturctureF.write(MS)
+            MStructureList.append(MIDList[0])
+        return list
 
 
 #查找当前菜单的结束位置
@@ -429,6 +452,8 @@ def findCurLevelEnd(row, col, nrows):
                 if tmpSubCell.value not in subItemList or tmpSubCell_2.value not in subItemList: 
                     return row - 1
                 else:
+                    if ifCellEmpty(currentSheet.cell(row+3, col)):
+                        subItemList.append(currentSheet.cell(row+3, col).value)
                     row = row + 4
             else:
                 return row - 1
@@ -439,13 +464,13 @@ def findCurLevelEnd(row, col, nrows):
 
 if __name__ == '__main__':
     print("1")
-    book = xlrd.open_workbook(os.getcwd() + excel, formatting_info = True)
+    book = xlrd.open_workbook(os.path.join(os.getcwd() , excel), formatting_info = True)
 
-    languageHFile = open(os.getcwd() + languageH)
-    languageCFile = open(os.getcwd() + languageC)
+    languageHFile = open(os.path.join(os.getcwd() , languageH))
+    languageCFile = open(os.path.join(os.getcwd() , languageC))
     languageHList = languageHFile.readlines()
     languageCList = languageCFile.readlines()
-    menuHFile = open(os.getcwd() + menuH, "w")
+    menuHFile = open(os.path.join(os.getcwd() , menuH), "w")
 
 
     names = book.sheet_names()      #get all sheet names
@@ -542,7 +567,7 @@ if __name__ == '__main__':
             menuSturctureF.write(genMStructureList(rootTitle, MStructureList))
             menuSturctureF.close()
             menuEntryF.close()
-    with open(os.getcwd() + menuH + '.base') as menuHBaseFile:
+    with open(os.path.join(os.getcwd() , menuH + '.base')) as menuHBaseFile:
         menuHContent = menuHBaseFile.read()
     menuHFile.write(genMIDList(MenuIDList))
     menuHFile.write(menuHContent)

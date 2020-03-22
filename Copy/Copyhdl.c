@@ -3,7 +3,7 @@
 #include "mid.h"
 #include "LangString.h"
 
-eMenuID CopyList[7] = {
+eMenuID CopyList[6] = {
     MID_Copy_PaperSupply,
     MID_Copy_ReduceEnlarge,
     MID_Copy_OriginalSize,
@@ -32,6 +32,7 @@ STRING_ID CopyString[7] = {
 
 HSM_EVENT OPS_CopyHndlr(HSM *This, HSM_EVENT event, void *param)
 {
+    static stValueItem value = {0,0,5};
     switch (event){
         case HSME_ENTRY:
             printf("entry Copy\n");
@@ -40,10 +41,10 @@ HSM_EVENT OPS_CopyHndlr(HSM *This, HSM_EVENT event, void *param)
             printf("exit Copy\n");
             break;
         case HSME_INIT:
-            basic.curValue = 0;
-            basic.minValue = 0;
-            basic.maxValue = 5;
-            menuset(basic.curValue, 5, &basic.MenuItem);
+            basic.curValue = value.curValue;
+            basic.minValue = value.minValue;
+            basic.maxValue = value.maxValue;
+            menuset(basic.curValue, basic.maxValue, &basic.MenuItem);
             break;
         case HSME_PWR:
             return 0;
@@ -59,6 +60,9 @@ HSM_EVENT OPS_CopyHndlr(HSM *This, HSM_EVENT event, void *param)
             printf("select down[%d]\n",basic.curValue);
             break;
         case HSME_KEY_OK:
+            value.curValue = basic.curValue;
+            value.minValue = basic.minValue;
+            value.maxValue = basic.maxValue;
             switch(basic.curValue){
                case 0:
                     HSM_Tran(This, &OPS_StateCopy_PaperSupply, 0, NULL);

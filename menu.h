@@ -44,9 +44,6 @@ typedef enum {
     MID_Copy_OutputBindingPosition_FliponLongEdge,
     MID_Copy_OutputBindingPosition_FilponShortEdge
 }eMenuID;
-#ifndef  MENU_H
-#define MENU_H
-
 //all menu ID end
 
 //all menu type
@@ -65,7 +62,7 @@ typedef struct _MenuEntryInfo{
     int MenuID;
     int StringID;
     eMenuType MenuType;
-    int DisplayPara;
+    bool DisplayPara;
     int ValueType;
     int ValueId;
     int ValueSubId;
