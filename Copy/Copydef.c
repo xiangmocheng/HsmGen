@@ -1,0 +1,7 @@
+HSM_STATE OPS_StateCopy;
+HSM_STATE OPS_StateCopy_PaperSupply;
+HSM_STATE OPS_StateCopy_ReduceEnlarge;
+HSM_STATE OPS_StateCopy_OriginalSize;
+HSM_STATE OPS_StateCopy_OriginalBindingPosition;
+HSM_STATE OPS_StateCopy_OutputBindingPosition;
+HSM_STATE OPS_StateCopy_EdgeErase;

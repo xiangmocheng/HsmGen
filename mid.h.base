@@ -1,0 +1,34 @@
+//all menu ID end
+
+//all menu type
+typedef enum {
+    QUAL_TYPE,              // use for enumerations
+    QUANT_TYPE,             // use for numeric value
+    MENU_TYPE,              // use for menu      =>  the entry is list, sub item is the sub menu entry   
+    DYNAMIC_LIST_TYPE,      // use for phonebook/udisk browser menu
+    WINDOW_TYPE,            // use for window/graphic menu
+    SELECT_TYPE,            // use for Select Action Parameters  => the entry is list, sub item is parameter setting entry
+    ENTRY_VALUE_TYPE,       // use for parameter name   => some parameter's sub menu,ex: A4L, the paper size sub menu
+}eMenuType;
+
+//menu entry structure
+typedef struct _MenuEntryInfo{
+    int MenuID;
+    int StringID;
+    eMenuType MenuType;
+    int DisplayPara;
+    int ValueType;
+    int ValueId;
+    int ValueSubId;
+    int CurValue;
+    int MinValue;
+    int MaxValue;
+    char* str;
+}stMenuEntryInfo, *pstMenuEntryInfo;
+
+//menu structure
+typedef struct _MenuStruct{
+    int MenuID;
+    int StringID;
+    eMenuID* pMenuIDList;
+}stMenuStruct, *pstMenuStruct;
